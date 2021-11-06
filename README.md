@@ -1,4 +1,4 @@
-# COMMODO WEB
+# REX Lending Frontend
 
 ## Development
 
