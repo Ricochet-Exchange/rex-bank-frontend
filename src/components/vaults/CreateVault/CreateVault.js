@@ -11,7 +11,7 @@ const CreateVault = ({ bank, visible, setVisible }) => {
   const [step, setStep] = useState(1);
   const [vaultData, setVaultData] = useState({
     collateralToken: bank.data.collateralToken.symbol,
-    debtToken: "DAI",
+    debtToken: bank.data.debtToken.symbol,
     depositAmount: "0",
     borrowAmount: "0",
   });

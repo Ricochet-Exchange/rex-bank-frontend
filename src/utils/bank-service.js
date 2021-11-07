@@ -121,7 +121,7 @@ export default class BankService {
       await this.initContract();
     }
 
-    const amount = (+depositAmount * 1e18).toString();
+    const amount = (+depositAmount * 1e18).toLocaleString('fullwide', {useGrouping:false});
 
     let deposit = this.contract.methods
       .vaultDeposit(amount)
@@ -144,7 +144,7 @@ export default class BankService {
       await this.initContract();
     }
 
-    const amount = (+borrowAmount * 1e18).toString();
+    const amount = (+borrowAmount * 1e18).toLocaleString('fullwide', {useGrouping:false})
 
     let deposit = this.contract.methods
       .vaultBorrow(amount)
