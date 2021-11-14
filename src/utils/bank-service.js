@@ -38,6 +38,12 @@ export default class BankService {
     const debtToken = await this.getTokenData(debtTokenAddress);
     const collateralToken = await this.getTokenData(collateralTokenAddress);
 
+    let name = await this.contract.methods.getName().call();
+    if (this.contractAddr === "0xc96Df9DB8eB59Ff6947eB12BecB9767D32271AF1") {
+      name = "✨ REX Bank";
+    }
+
+
     return {
       vault,
       debtToken: {
@@ -66,7 +72,7 @@ export default class BankService {
       reserveCollateralBalance: await this.contract.methods
         .getReserveCollateralBalance()
         .call(),
-      name: await this.contract.methods.getName().call(),
+      name: name,
     };
   }
 
@@ -107,12 +113,17 @@ export default class BankService {
         .call();
     }
 
+    let hasVault = +debtAmount > 0 || +collateralAmount > 0;
+    if (this.contractAddr !== "0xc96Df9DB8eB59Ff6947eB12BecB9767D32271AF1") {
+      hasVault = true;
+    }
+
     return {
       collateralAmount,
       repayAmount,
       debtAmount,
       collateralizationRatio,
-      hasVault: +debtAmount > 0 || +collateralAmount > 0,
+      hasVault: hasVault,
     };
   }
 
