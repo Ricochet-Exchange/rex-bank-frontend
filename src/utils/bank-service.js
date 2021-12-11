@@ -102,9 +102,16 @@ export default class BankService {
     const repayAmount = await this.contract.methods
       .getVaultRepayAmount()
       .call({ from: this.connectedAccount });
-    const debtAmount = await this.contract.methods
+    let debtAmount = await this.contract.methods
       .getVaultDebtAmount()
       .call({ from: this.connectedAccount });
+
+    // Accounts for interest
+    if (+repayAmount > +debtAmount) {
+      debtAmount = repayAmount;
+    } else {
+      debtAmount += repayAmount;
+    }
 
     let collateralizationRatio = 0;
     if (this.connectedAccount) {
@@ -114,7 +121,7 @@ export default class BankService {
     }
 
     let hasVault = +debtAmount > 0 || +collateralAmount > 0;
-    if (this.contractAddr !== "0x91093c77720e744F415D33551C2fC3FAf7333c8c") {
+    if (this.contractAddr !== "0xaD39F774A75C7673eE0c8Ca2A7b88454580D7F53") {
       hasVault = true;
     }
 
