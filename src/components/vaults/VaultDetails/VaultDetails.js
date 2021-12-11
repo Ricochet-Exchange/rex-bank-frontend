@@ -14,8 +14,15 @@ const VaultDetails = ({ bank }) => {
   const [txPending, setTxPending] = useState();
 
   const data = bank.data;
-
   const vaultCalcValues = getVaultCalcValues(data);
+
+  const maxBorrowAllowed = vaultCalcValues.borrowAvailable.toFixed(4);
+  const availableBorrow = (+data.reserveBalance / 1e18).toFixed();
+  
+  let borrowShown = maxBorrowAllowed
+  if (availableBorrow < maxBorrowAllowed) {
+    borrowShown = availableBorrow
+  }
 
   return (
     <div className="VaultDetails">
@@ -94,7 +101,7 @@ const VaultDetails = ({ bank }) => {
           <div className="VaultDetail">
             <p>Available to borrow</p>
             <h3>
-              {vaultCalcValues.borrowAvailable.toFixed(4)}{" "}
+              {borrowShown}{" "}
               {data.debtToken.symbol}
             </h3>
           </div>
