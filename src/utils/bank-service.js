@@ -107,11 +107,11 @@ export default class BankService {
       .call({ from: this.connectedAccount });
 
     // Accounts for interest
-    if (+repayAmount > +debtAmount) {
-      debtAmount = repayAmount;
-    } else {
-      debtAmount += repayAmount;
-    }
+    // if (+repayAmount > +debtAmount) {
+    //   debtAmount = repayAmount;
+    // } else {
+    //   debtAmount += repayAmount;
+    // }
 
     let collateralizationRatio = 0;
     if (this.connectedAccount) {
