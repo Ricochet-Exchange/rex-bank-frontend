@@ -15,7 +15,8 @@
   @include lightshadow;
   height: 40px;
   border-radius: 20px;
-  padding: 0;
+  padding: 0 10px;
+  color: var(--color-white-dark);
 }
 
 .connected p {
