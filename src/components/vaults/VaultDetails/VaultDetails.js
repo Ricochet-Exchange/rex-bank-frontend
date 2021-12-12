@@ -94,7 +94,7 @@ const VaultDetails = ({ bank }) => {
           <div className="VaultDetail">
             <p>Available to borrow</p>
             <h3>
-              {vaultCalcValues.borrowAvailable > data.reserveBalance ?
+              {vaultCalcValues.borrowAvailable > (data.reserveBalance / 1e18 ) ?
                   (data.reserveBalance / 1e18 ).toFixed() : vaultCalcValues.borrowAvailable.toFixed(4)}{" "}
               {data.debtToken.symbol}
             </h3>
