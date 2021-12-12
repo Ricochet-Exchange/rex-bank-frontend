@@ -1,16 +1,20 @@
 import BankAbi from "../contracts/Bank.json";
+import Erc20Abi from "../contracts/Erc20.json";
 import TokenService from "./token-service";
 
 export default class BankService {
   contractAddr;
   web3Service;
   bankAbi;
+  erc20Abi;
   contract;
+  token;
 
   constructor(contractAddr, web3Service, connectedAccount) {
     this.contractAddr = contractAddr;
     this.web3Service = web3Service;
     this.bankAbi = BankAbi.abi;
+    this.erc20Abi = Erc20Abi;
     this.connectedAccount = connectedAccount;
   }
 
@@ -19,6 +23,11 @@ export default class BankService {
       this.bankAbi,
       this.contractAddr
     );
+    console.log("ABI", this.erc20Abi);
+    this.token = await this.web3Service.initContract(
+      this.erc20Abi,
+      (await this.contract.methods.getDebtTokenAddress().call())
+    )
     return this.contract;
   }
 
@@ -39,8 +48,10 @@ export default class BankService {
     const collateralToken = await this.getTokenData(collateralTokenAddress);
 
     let name = await this.contract.methods.getName().call();
+    let reserveBalance = await this.token.methods.balanceOf(this.contractAddr).call()
     if (this.contractAddr === "0x91093c77720e744F415D33551C2fC3FAf7333c8c") {
-      name = "✨ REX Bank";
+      name = "🚫 REX Bank";
+      reserveBalance = "0";
     }
 
 
@@ -68,7 +79,7 @@ export default class BankService {
       liquidationPenalty: await this.contract.methods
         .getLiquidationPenalty()
         .call(),
-      reserveBalance: await this.contract.methods.getReserveBalance().call(),
+      reserveBalance: reserveBalance,
       reserveCollateralBalance: await this.contract.methods
         .getReserveCollateralBalance()
         .call(),
