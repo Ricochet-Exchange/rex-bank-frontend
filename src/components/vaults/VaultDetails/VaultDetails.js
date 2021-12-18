@@ -16,13 +16,13 @@ const VaultDetails = ({ bank }) => {
   const data = bank.data;
   const vaultCalcValues = getVaultCalcValues(data);
 
-  const maxBorrowAllowed = vaultCalcValues.borrowAvailable.toFixed(4);
-  const availableBorrow = (+data.reserveBalance / 1e18).toFixed();
-  
-  let borrowShown = maxBorrowAllowed
-  if (availableBorrow < maxBorrowAllowed) {
-    borrowShown = availableBorrow
-  }
+  // const maxBorrowAllowed = vaultCalcValues.borrowAvailable.toFixed(4);
+  // const availableBorrow = (+data.reserveBalance / 1e18).toFixed();
+  //
+  // let borrowShown = maxBorrowAllowed
+  // if (availableBorrow < maxBorrowAllowed) {
+  //   borrowShown = availableBorrow
+  // }
 
   return (
     <div className="VaultDetails">
