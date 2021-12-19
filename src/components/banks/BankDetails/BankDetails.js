@@ -25,7 +25,7 @@ const BankDetails = ({ address, bank }) => {
           <div className="flexer"></div>
           {web3 && web3.account ? (
             <>
-              {!bank.data.vault.hasVault ? (
+              {bank.data.vault.enabled ? (
                 <Button
                   shape="round"
                   size="large"
